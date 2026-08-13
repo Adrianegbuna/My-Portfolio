@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ profile.name }} | {{ profile.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
 <body>
@@ -27,10 +28,10 @@
         </nav>
 
         <div class="social-links" aria-label="Social links">
-            <a href="{{ profile.github }}" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
-            <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn">IN</a>
-            <a href="#" aria-label="Twitter">X</a>
-            <a href="mailto:{{ profile.email }}" aria-label="Email">@</a>
+            <a href="{{ profile.github }}" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+            <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-square-x-twitter" aria-hidden="true"></i></a>
+            <a href="mailto:{{ profile.email }}" aria-label="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
         </div>
     </aside>
 
