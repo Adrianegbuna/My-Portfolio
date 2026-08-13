@@ -1,0 +1,28 @@
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Django local/generated files
+db.sqlite3
+*.sqlite3
+staticfiles/
+media/
+
+# Tooling and editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

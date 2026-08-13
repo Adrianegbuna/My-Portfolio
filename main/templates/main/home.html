@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name }} | {{ profile.title }}</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <aside class="sidebar" aria-label="Portfolio summary">
+        <div class="intro">
+            <h1>{{ profile.name }}</h1>
+            <h4>{{ profile.title }}</h4>
+            <p>{{ profile.summary }}</p>
+        </div>
+
+        <nav class="section-nav" aria-label="Page sections">
+            <a href="#about"><span></span>About</a>
+            <a href="#experience"><span></span>Experience</a>
+            <a href="#projects"><span></span>Projects</a>
+            <a href="#achievements"><span></span>Achievements</a>
+            <a href="#certifications"><span></span>Certifications</a>
+            <a href="#contact"><span></span>Contact</a>
+        </nav>
+
+        <div class="social-links" aria-label="Social links">
+            <a href="{{ profile.github }}" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+            <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer" aria-label="LinkedIn">IN</a>
+            <a href="#" aria-label="Twitter">X</a>
+            <a href="mailto:{{ profile.email }}" aria-label="Email">@</a>
+        </div>
+    </aside>
+
+    <main id="main" class="content">
+        <section id="about" class="section">
+            <p class="section-label">About</p>
+            <div class="prose">
+                <p>I build full-stack web and mobile applications using HTML, CSS, JavaScript, Python, Django, React Native, Expo, and SQLite. My work focuses on creating responsive user experiences, reliable backends, and practical solutions that solve real-world problems.</p>
+                <p>I just finished studying Software Engineering at Veritas University while expanding my portfolio with projects spanning web platforms, cross-platform mobile apps, healthcare systems, scheduling solutions, accommodation management, and content-driven applications.</p>
+                <p>Beyond development, I bring project management, technical documentation, and structured problem-solving skills, with a focus on building software that is scalable, maintainable, and easy for people to use and improve.</p>
+            </div>
+            <div class="skill-cloud" aria-label="Technical skills">
+                {% for skill in skills %}
+                    <span>{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <p class="section-label">Experience</p>
+            <div class="timeline">
+                {% for item in experiences %}
+                    <article class="timeline-item">
+                        <time>{{ item.date }}</time>
+                        <div>
+                            <h3>{{ item.role }} <span>&middot; {{ item.company }}</span></h3>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+            <a class="text-link" href="#" target="_blank" rel="noreferrer">View Full Resume <span aria-hidden="true">&nearr;</span></a>
+        </section>
+
+        <section id="projects" class="section">
+            <p class="section-label">Featured Projects</p>
+            <div class="projects-list">
+                {% for project in projects %}
+                    <article class="project">
+                        <a class="project-image" href="{{ project.live }}" target="_blank" rel="noreferrer">
+                            {% if project.local_image %}
+                                <img src="{% static project.image %}" alt="{{ project.name }} project preview">
+                            {% else %}
+                                <img src="{{ project.image }}" alt="{{ project.name }} project preview">
+                            {% endif %}
+                        </a>
+                        <div class="project-body">
+                            <div class="project-title-row">
+                                <h3><a href="{{ project.live }}" target="_blank" rel="noreferrer">{{ project.name }} <span aria-hidden="true">&nearr;</span></a></h3>
+                                <span class="pill">{{ project.status }}</span>
+                            </div>
+                            <p class="meta">{{ project.role }}</p>
+                            <p>{{ project.summary }}</p>
+                            <p>{{ project.impact }}</p>
+                            <div class="tags">
+                                {% for tech in project.tech %}
+                                    <span>{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="project-links">
+                                <a href="{{ project.live }}" target="_blank" rel="noreferrer">Live</a>
+                                <a href="{{ project.code }}" target="_blank" rel="noreferrer">Code</a>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="achievements" class="section">
+            <p class="section-label">Achievements</p>
+            <div class="achievement-list">
+                {% for item in achievements %}
+                    <article class="achievement-card">
+                        <div>
+                            <h3>{{ item.title }}</h3>
+                            <p>{{ item.source }}</p>
+                        </div>
+                        <time>{{ item.year }}</time>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="certifications" class="section">
+            <p class="section-label">Certifications</p>
+            {% if certifications %}
+                <div class="cert-grid">
+                    {% for item in certifications %}
+                        <article class="cert-card">
+                            <img src="{{ item.image }}" alt="{{ item.name }} certificate placeholder">
+                            <div class="cert-copy">
+                                <time>{{ item.year }}</time>
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.issuer }}</p>
+                                <p>{{ item.detail }}</p>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
+        <section id="contact" class="section">
+            <p class="section-label">Contact</p>
+            <div class="prose">
+                <p>I am open to internship opportunities, junior software engineering roles, project collaborations, and Django-focused web development work. The fastest way to reach me is email.</p>
+            </div>
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p class="message {{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form class="contact-form" method="post">
+                {% csrf_token %}
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required>
+
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" minlength="20" maxlength="3000" required></textarea>
+                <div class="form-help">
+                    <span>Minimum 20 characters.</span>
+                    <span>0/3000</span>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+            <div class="contact-links">
+                <a href="#" target="_blank" rel="noreferrer">Portfolio</a>
+                <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+                <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href="{{ profile.github }}" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
